@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:utext="${title}"></title>
+</head>
+<body>
+<form name='f' th:action="@{/addFunction}" method='POST'>
+    <table>
+        <tr>
+            <td>Function Name:</td>
+            <td><input type='text' name='functionName' value=''></td>
+        </tr>
+        <tr>
+            <td>Function Url:</td>
+            <td><input type='text' name='functionUrl' /></td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><input type='text' name='description' /></td>
+        </tr>
+        <tr>
+            <td>Function Code:</td>
+            <td><input type='text' name='functionCode' /></td>
+        </tr>
+        <tr>
+            <td>Function Order:</td>
+            <td>
+                <select name = "functionOrder">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

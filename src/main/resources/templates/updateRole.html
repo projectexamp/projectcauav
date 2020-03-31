@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:utext="${title}"></title>
+</head>
+<body>
+<form name='f' th:action="@{/updateRole2}" th:object = "${role}" method='POST'>
+    <table>
+        <tr>
+            <td><input type='hidden' th:field="*{roleId}" name='functionId'></td>
+        </tr>
+        <tr>
+            <td><input type='hidden' th:field="*{status}" name='status'></td>
+        </tr>
+        <tr>
+            <td>Role Name:</td>
+            <td><input type='text' th:field="*{roleName}" name='functionName'></td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><input type='text' name='description'  th:field="*{description}" /></td>
+        </tr>
+        <tr>
+            <td>Role Code:</td>
+            <td><input type='text' name='functionCode' th:field="*{roleCode}" /></td>
+        </tr>
+        <tr>
+            <td>Role Order:</td>
+            <td>
+                <select name = "functionOrder" th:field="*{roleOrder}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

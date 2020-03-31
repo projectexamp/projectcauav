@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:utext="${title}"></title>
+</head>
+<body>
+<form name='f' th:action="@{/updateFunction2}" th:object = "${function}" method='POST'>
+    <table>
+        <tr>
+            <td><input type='hidden' th:field="*{functionId}" name='functionId'></td>
+        </tr>
+        <tr>
+            <td><input type='hidden' th:field="*{status}" name='status'></td>
+        </tr>
+        <tr>
+            <td>Function Name:</td>
+            <td><input type='text' th:field="*{functionName}" name='functionName'></td>
+        </tr>
+        <tr>
+            <td>Function Url:</td>
+            <td><input type='text' name='functionUrl' th:field="*{functionUrl}" /></td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><input type='text' name='description'  th:field="*{description}" /></td>
+        </tr>
+        <tr>
+            <td>Function Code:</td>
+            <td><input type='text' name='functionCode' th:field="*{functionCode}" /></td>
+        </tr>
+        <tr>
+            <td>Function Order:</td>
+            <td>
+                <select name = "functionOrder" th:field="*{functionOrder}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

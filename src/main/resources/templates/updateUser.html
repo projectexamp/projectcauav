@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:utext="${title}"></title>
+</head>
+<body>
+<form name='f' th:action="@{/updateUser2}" th:object = "${user}" method='POST'>
+    <table>
+        <tr>
+            <td><input type='hidden' th:field="*{userId}" name='functionId'></td>
+        </tr>
+        <tr>
+            <td><input type='hidden' th:field="*{status}" name='status'></td>
+        </tr>
+        <tr>
+            <td>User Name:</td>
+            <td><input type='text' name='userName' th:field="*{userName}" value=''></td>
+        </tr>
+        <tr>
+            <td>Full Name:</td>
+            <td><input type='text' name='fullName' th:field="*{fullName}" /></td>
+        </tr>
+        <tr>
+            <td>Pass Word:</td>
+            <td><input type='text' name='password' th:field="*{password}" /></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td><input type = "radio" name="gender" value = "0"></td>
+            <td>Nữ</td>
+            <td><input type = "radio" name="gender" value = "1"></td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

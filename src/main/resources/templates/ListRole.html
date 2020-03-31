@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+</head>
+<body>
+<form th:action="@{/searchRole}">
+    <input type="text" th:name="searchText"/>
+    <input type="submit"/>
+</form>
+<br>
+<a href="/addRole">Add</a>
+<table border="1">
+    <tr>
+        <th>index</th>
+        <th>Role Name</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="item, state : ${lstRole}">
+        <td th:utext="${state.index + 1}">index</td>
+        <td th:utext="${item.roleName}">count</td>
+        <td><a th:href="@{'/updateRole/' + ${item.roleId}}">Update</a>
+            <a th:href="@{'/disableRole/' + ${item.roleId}}">Disable</a></td>
+    </tr>
+
+</table>
+</body>
+</html>
