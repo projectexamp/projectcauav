@@ -27,6 +27,7 @@ public class Functions {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FUNCTION_ID")
     public int getFunctionId() {
         return functionId;

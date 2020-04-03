@@ -26,9 +26,18 @@
         </tr>
         <tr>
             <td>Name</td>
-            <td><input type = "radio" name="gender" value = "0"></td>
+            <td><input type = "radio" name="gender" checked="*{gender=0}" value = "0"></td>
             <td>Nữ</td>
-            <td><input type = "radio" name="gender" value = "1"></td>
+            <td><input type = "radio" name="gender" checked="*{gender=1}" value = "1"></td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>
+                <th:block th:each="item : ${lstRole}">
+                    <input type="checkbox" name = "roleId" th:checked="${lstRoleTemp.contains(item)}" th:value="${item.roleId}"/>
+                    <label th:text="${item.roleName}"></label>
+                </th:block>
+            </td>
         </tr>
         <tr>
             <td><input name="submit" type="submit" value="submit" /></td>

@@ -7,20 +7,29 @@ import java.util.Objects;
 @Table(name = "role_user", schema = "project_test")
 public class RoleUser {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ROLE_USER_ID", nullable = false)
     private Long roleUserId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ROLE_ID", nullable = false)
     private Role role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     @Column(name = "IS_ACTIVE")
     private int isActive;
+
+    public RoleUser() {
+    }
+
+    public RoleUser(Role role, User user, int isActive) {
+        this.role = role;
+        this.user = user;
+        this.isActive = isActive;
+    }
 
     public Long getRoleUserId() {
         return roleUserId;

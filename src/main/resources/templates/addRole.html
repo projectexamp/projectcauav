@@ -29,6 +29,15 @@
             </td>
         </tr>
         <tr>
+            <td>Role</td>
+            <td>
+                <th:block th:each="item : ${lstFunction}" >
+                    <input type="checkbox" name = "functionId" th:value="${item.functionId}"/>
+                    <label th:text="${item.functionName}"></label>
+                </th:block>
+            </td>
+        </tr>
+        <tr>
             <td><input name="submit" type="submit" value="submit" /></td>
         </tr>
     </table>

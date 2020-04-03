@@ -25,6 +25,15 @@
                     <td><input type = "radio" name="gender" value = "1"></td>
         </tr>
         <tr>
+            <td>Role</td>
+            <td>
+                <th:block th:each="item : ${lstRole}" name = "lstRoleTemp">
+                    <input type="checkbox" name = "roleId" th:value="${item.roleId}"/>
+                    <label th:text="${item.roleName}"></label>
+                </th:block>
+            </td>
+        </tr>
+        <tr>
             <td><input name="submit" type="submit" value="submit" /></td>
         </tr>
     </table>

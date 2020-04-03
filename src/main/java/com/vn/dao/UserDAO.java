@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.List;
 
 @Repository
@@ -52,15 +53,13 @@ public class UserDAO {
         }
     }
     @Transactional
-    public boolean add(User user) {
+    public Integer add(User user) {
         Session session = sessionFactory.getCurrentSession();
         try {
-            session.save(user);
-            session.flush();
-            return true;
+            return (Integer) session.save(user);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
     @Transactional

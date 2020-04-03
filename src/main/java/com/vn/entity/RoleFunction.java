@@ -10,7 +10,7 @@ import javax.persistence.*;
                 @UniqueConstraint(name = "ROLE_FUNCTION_ID", columnNames = "ROLE_FUNCTION_ID") })
 public class RoleFunction {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ROLE_FUNCTION_ID")
     private int roleFunctionId;
 
@@ -24,6 +24,15 @@ public class RoleFunction {
 
     @Column(name = "IS_ACTIVE")
     private int isActive;
+
+    public RoleFunction() {
+    }
+
+    public RoleFunction(Functions functions, Role role, int isActive) {
+        this.function = functions;
+        this.role = role;
+        this.isActive = isActive;
+    }
 
     public int getRoleFunctionId() {
         return roleFunctionId;

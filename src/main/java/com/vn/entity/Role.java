@@ -24,6 +24,7 @@ public class Role {
           this.roleOrder = roleOrder;
     }
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ROLE_ID")
     public int getRoleId() {
         return roleId;

@@ -53,15 +53,13 @@ public class RoleDAO {
         }
     }
     @Transactional
-    public boolean add(Role role) {
+    public Integer add(Role role) {
         Session session = sessionFactory.getCurrentSession();
         try {
-            session.save(role);
-            session.flush();
-            return true;
+            return (Integer) session.save(role);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
     @Transactional
@@ -83,6 +81,19 @@ public class RoleDAO {
                     + " Where r.roleName like concat('%',:roleName,'%') and r.status = 1";
             Query query = session.createQuery(sql, Role.class);
             query.setParameter("roleName", roleName);
+            return (List<Role>) query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public List<Role> findCheckedRole(Integer userId) {
+        Session session = sessionFactory.getCurrentSession();
+        try {
+            String sql = "Select r from " + Role.class.getName() + " r " //
+                    + " Where r.userId =:userId and r.status = 1";
+            Query query = session.createQuery(sql, Role.class);
+            query.setParameter("userId", userId);
             return (List<Role>) query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
