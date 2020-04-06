@@ -39,7 +39,7 @@ public class UserController {
     }
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String addtoUser(ModelMap model, @RequestParam("userName") String userName,
-                            @RequestParam("fullName") String fullName, @RequestParam("gender") Integer gender, @RequestParam("roleId") Integer roleId, @RequestParam("password") String password,
+                            @RequestParam("fullName") String fullName, @RequestParam("gender") int gender, @RequestParam("roleId") Integer roleId, @RequestParam("password") String password,
                             @RequestParam("roleId") Integer[] lstRoleId) {
         boolean checkInsert = false;
         EncrytedPasswordUtils encrytedPasswordUtils = new EncrytedPasswordUtils();

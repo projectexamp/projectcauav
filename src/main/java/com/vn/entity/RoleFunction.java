@@ -14,11 +14,11 @@ public class RoleFunction {
     @Column(name = "ROLE_FUNCTION_ID")
     private int roleFunctionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FUNCTION_ID", nullable = false)
     private Functions function;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ROLE_ID", nullable = false)
     private Role role;
 

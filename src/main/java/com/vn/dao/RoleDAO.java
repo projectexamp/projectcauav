@@ -100,4 +100,17 @@ public class RoleDAO {
             return null;
         }
     }
+    public Role findByRoleName(String roleName) {
+        Session session = sessionFactory.getCurrentSession();
+        try {
+            String sql = "Select r from " + Role.class.getName() + " r " //
+                    + " Where r.roleName =:roleName and r.status = 1";
+            Query query = session.createQuery(sql, Role.class);
+            query.setParameter("roleName", roleName);
+            return (Role) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

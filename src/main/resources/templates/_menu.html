@@ -15,4 +15,11 @@
 
     <a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
 
+    | &nbsp;
+
+    <div th:if="${#request.userPrincipal != null}">
+    <div th:each="item, state : ${lstFunction}">
+        <a href="" th:text="${item.functionName}"></a>
+    </div>
+    </div>
 </div>

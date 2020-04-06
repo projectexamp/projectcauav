@@ -1,22 +1,34 @@
 package com.vn.controller;
 
+import com.vn.dao.RoleDAO;
+import com.vn.dao.RoleFunctionDAO;
 import com.vn.dao.UserDAO;
+import com.vn.entity.Functions;
+import com.vn.entity.Role;
+import com.vn.entity.RoleFunction;
 import com.vn.entity.User;
 import com.vn.untils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
 public class MainController {
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private RoleFunctionDAO roleFunctionDAO;
+    @Autowired
+    private RoleDAO roleDAO;
     @RequestMapping("/hello")
     public String getHello() {
         List<User> lst = userDAO.findAll();
@@ -64,9 +76,25 @@ public class MainController {
         System.out.println("User Name: " + userName);
 
         org.springframework.security.core.userdetails.User loginedUser = (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
-
+        List<String> lstRole = new ArrayList<>();
+        List<Functions> lstFunction = new ArrayList<>();
+        Collection<GrantedAuthority> demo = loginedUser.getAuthorities();
+        demo.forEach(a -> {
+            String roleTemp = a.getAuthority();
+            lstRole.add(roleTemp);
+        });
+        for(String x : lstRole) {
+            Role roleTemp =roleDAO.findByRoleName(x);
+            List<RoleFunction> functionsList = roleFunctionDAO.lstFunction(roleTemp.getRoleId());
+            for(RoleFunction roleFunction : functionsList) {
+                if(!lstFunction.contains(roleFunction.getFunction())) {
+                    lstFunction.add(roleFunction.getFunction());
+                }
+            }
+        }
         String userInfo = WebUtils.toString(loginedUser);
         model.addAttribute("userInfo", userInfo);
+        model.addAttribute("lstFunction", lstFunction);
 
         return "userInfoPage";
     }

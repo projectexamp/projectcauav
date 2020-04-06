@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 @Controller
 public class RoleController {
@@ -67,20 +69,28 @@ public class RoleController {
     @RequestMapping("/updateRole/{id}")
     public String showUpdateFunction(ModelMap model,  @PathVariable("id") int roleId) {
         List<Functions> lstFunction = fuctionDAO.findAll();
+        List<Functions> lstFunctionTemp = new ArrayList<>();
+        List<RoleFunction> lstRoleFunction = roleFunctionDAO.lstFunction(roleId);
+        for(RoleFunction roleFunction : lstRoleFunction) {
+            lstFunctionTemp.add(roleFunction.getFunction());
+        }
+        model.addAttribute("lstFunctionTemp", lstFunctionTemp);
         model.addAttribute("lstFunction", lstFunction);
         Role role = roleDAO.findById(roleId);
         model.addAttribute("role", role);
         return "updateRole";
     }
     @RequestMapping(value = "/updateRole2", method = RequestMethod.POST)
-    public String updateRole(Role role, @RequestParam("functionId")Integer[] functionId) {
+    public String updateRole(Role role, @RequestParam(value = "functionId", required = false)int[] functionId) {
         List<RoleFunction> lstRoleFunction = roleFunctionDAO.lstFunction(role.getRoleId());
         for(RoleFunction roleFunctionTemp : lstRoleFunction) {
             roleFunctionDAO.deleteRoleFunction(roleFunctionTemp);
         }
-        for(Integer n : functionId) {
-            Functions functions = fuctionDAO.findById(n);
-            roleFunctionDAO.addRoleFunction(new RoleFunction(functions, role, 1));
+        if(functionId != null) {
+            for(Integer n : functionId) {
+                Functions functions = fuctionDAO.findById(n);
+                roleFunctionDAO.addRoleFunction(new RoleFunction(functions, role, 1));
+            }
         }
         if(roleDAO.update(role)) {
             return "redirect:/showRole";

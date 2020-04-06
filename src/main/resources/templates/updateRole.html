@@ -38,7 +38,7 @@
             <td>Role</td>
             <td>
                 <th:block th:each="item : ${lstFunction}" >
-                    <input type="checkbox" name = "functionId" th:value="${item.functionId}"/>
+                    <input type="checkbox" name = "functionId" th:checked="${lstFunctionTemp.contains(item)}" th:value="${item.functionId}"/>
                     <label th:text="${item.functionName}"></label>
                 </th:block>
             </td>
