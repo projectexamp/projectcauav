@@ -14,21 +14,21 @@
         </tr>
         <tr>
             <td>User Name:</td>
-            <td><input type='text' name='userName' th:field="*{userName}" value=''></td>
+            <td><input type='text' name='userName' maxlength="30" required="required" th:field="*{userName}" value=''></td>
         </tr>
         <tr>
             <td>Full Name:</td>
-            <td><input type='text' name='fullName' th:field="*{fullName}" /></td>
+            <td><input type='text' name='fullName' maxlength="50" required="required" th:field="*{fullName}" /></td>
         </tr>
         <tr>
             <td>Pass Word:</td>
-            <td><input type='text' name='password' th:field="*{password}" /></td>
+            <td><input type='text' name='password' maxlength="30" required="required" th:field="*{password}" /></td>
         </tr>
         <tr>
             <td>Name</td>
-            <td><input type = "radio" name="gender" th:checked="*{gender==0}" value = "0"></td>
+            <td><input type = "radio" required="required" name="gender" th:checked="*{gender==0}" value = "0"></td>
             <td>Nữ</td>
-            <td><input type = "radio" name="gender" th:checked="*{gender==1}" value = "1"></td>
+            <td><input type = "radio" required="required" name="gender" th:checked="*{gender==1}" value = "1"></td>
         </tr>
         <tr>
             <td>Role</td>

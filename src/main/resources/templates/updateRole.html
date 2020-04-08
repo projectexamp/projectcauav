@@ -14,15 +14,15 @@
         </tr>
         <tr>
             <td>Role Name:</td>
-            <td><input type='text' th:field="*{roleName}" name='functionName'></td>
+            <td><input type='text' maxlength="30" th:field="*{roleName}" required="required" name='functionName'></td>
         </tr>
         <tr>
             <td>Description:</td>
-            <td><input type='text' name='description'  th:field="*{description}" /></td>
+            <td><input type='text' name='description' maxlength="100"  th:field="*{description}" /></td>
         </tr>
         <tr>
             <td>Role Code:</td>
-            <td><input type='text' name='functionCode' th:field="*{roleCode}" /></td>
+            <td><input type='text' name='functionCode' maxlength="30" th:field="*{roleCode}" /></td>
         </tr>
         <tr>
             <td>Role Order:</td>

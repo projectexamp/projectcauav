@@ -14,19 +14,19 @@
         </tr>
         <tr>
             <td>Function Name:</td>
-            <td><input type='text' th:field="*{functionName}" name='functionName'></td>
+            <td><input type='text' maxlength="30" th:field="*{functionName}" required="required" name='functionName'></td>
         </tr>
         <tr>
             <td>Function Url:</td>
-            <td><input type='text' name='functionUrl' th:field="*{functionUrl}" /></td>
+            <td><input type='text' maxlength="50" name='functionUrl' required="required" th:field="*{functionUrl}" /></td>
         </tr>
         <tr>
             <td>Description:</td>
-            <td><input type='text' name='description'  th:field="*{description}" /></td>
+            <td><input type='text' name='description' maxlength="100"  th:field="*{description}" /></td>
         </tr>
         <tr>
             <td>Function Code:</td>
-            <td><input type='text' name='functionCode' th:field="*{functionCode}" /></td>
+            <td><input type='text' name='functionCode' maxlength="30" th:field="*{functionCode}" /></td>
         </tr>
         <tr>
             <td>Function Order:</td>
