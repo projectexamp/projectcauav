@@ -16,10 +16,15 @@
     <a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
 
     | &nbsp;
+    <a th:if="${#request.userPrincipal != null}" th:href="@{/changePassWord}">Change PassWord</a>
 
-    <div th:if="${#request.userPrincipal != null}">
-    <div th:each="item, state : ${lstFunction}">
-        <a href="" th:text="${item.functionName}"></a>
-    </div>
-    </div>
+    | &nbsp;
+    <br>
+
+    <a th:if="${#request.userPrincipal != null}">
+    <a th:each="item, state : ${lstFunction}">
+        <a th:href="@{'/' + ${item.functionUrl} + '/' + ${item.functionId}}" th:text="${item.functionName}"></a>
+        | &nbsp;
+    </a>
+    </a>
 </div>

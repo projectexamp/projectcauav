@@ -1,8 +1,13 @@
 package com.vn.controller;
 
-import com.vn.dao.FuctionDAO;
+import com.vn.dao.*;
 import com.vn.entity.Functions;
+import com.vn.entity.Role;
+import com.vn.entity.RoleFunction;
+import com.vn.entity.RoleUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,12 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class FunctionController {
     @Autowired
     private FuctionDAO fuctionDAO;
+
+    @Autowired
+    private UserDAO userDAO;
+
+    @Autowired
+    private RoleDAO roleDAO;
+
+    @Autowired
+    private RoleFunctionDAO roleFunctionDAO;
+
+    @Autowired
+    private RoleUserDAO roleUserDAO;
 
     @RequestMapping("/showFunction")
     public String showFunction(ModelMap model) {
@@ -66,5 +86,59 @@ public class FunctionController {
         List<Functions> lstFunction = fuctionDAO.findLstFunction(textSearch);
         model.addAttribute("lstFunction", lstFunction);
         return "ListFunction";
+    }
+    @RequestMapping(value = "/addDepart/{id}", method = RequestMethod.GET)
+    public String addDepart(@PathVariable("id") int functionId, Principal principal, HttpServletRequest request) {
+        String test = request.getRequestURI();
+        User userLogin = (User) ((Authentication) principal).getPrincipal();
+        com.vn.entity.User userEntity = userDAO.findUserAccount(userLogin.getUsername());
+        int userId = (userDAO.findUserAccount(userLogin.getUsername()).getUserId());
+        boolean check = checkFuncitonWithRole(functionId, userId, test);
+        if(check) {
+            return "addDepart";
+        } else {
+            return "redirect:/403";
+        }
+    }
+    @RequestMapping(value = "/updateDepart/{id}", method = RequestMethod.GET)
+    public String updateDepart(@PathVariable("id") int functionId, Principal principal, HttpServletRequest request) {
+        User userLogin = (User) ((Authentication) principal).getPrincipal();
+        String test = request.getRequestURI();
+        com.vn.entity.User userEntity = userDAO.findUserAccount(userLogin.getUsername());
+        int userId = (userDAO.findUserAccount(userLogin.getUsername()).getUserId());
+        boolean check = checkFuncitonWithRole(functionId, userId, test);
+        if(check) {
+            return "updateDepart";
+        } else {
+            return "redirect:/403";
+        }
+    }
+    public boolean checkFuncitonWithRole(int functionId, int userId, String url) {
+        boolean check = false;
+        List<RoleUser> lstRoleUser = new ArrayList<>();
+        List<RoleFunction> lstRoleFunction = new ArrayList<>();
+        List<Integer> lstResultId = new ArrayList<>();
+        List<String> lstResultString = new ArrayList<>();
+        lstRoleUser = roleUserDAO.findListRoleUser(userId);
+        if(!lstRoleUser.isEmpty() && lstRoleUser != null) {
+            for(RoleUser roleUser : lstRoleUser) {
+                lstRoleFunction = roleFunctionDAO.lstFunction(roleUser.getRole().getRoleId());
+                if(!lstRoleFunction.isEmpty() && lstRoleFunction != null) {
+                    for(RoleFunction roleFunction : lstRoleFunction) {
+                        int a = roleFunction.getFunction().getFunctionId();
+                        lstResultId.add(a);
+                        lstResultString.add(roleFunction.getFunction().getFunctionUrl());
+                    }
+                    if(lstResultId.contains(functionId)) {
+                        for(String a : lstResultString) {
+                            if(url.contains(a)) {
+                                check = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return check;
     }
 }

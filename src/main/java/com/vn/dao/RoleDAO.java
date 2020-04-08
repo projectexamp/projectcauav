@@ -87,7 +87,7 @@ public class RoleDAO {
             return null;
         }
     }
-    public List<Role> findCheckedRole(Integer userId) {
+    public List<Role> findCheckedRole(int userId) {
         Session session = sessionFactory.getCurrentSession();
         try {
             String sql = "Select r from " + Role.class.getName() + " r " //

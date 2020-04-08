@@ -8,6 +8,7 @@ import com.vn.entity.RoleUser;
 import com.vn.entity.User;
 import com.vn.untils.EncrytedPasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 @Controller
@@ -112,5 +115,24 @@ public class UserController {
         List<User> lstUser = userDAO.findLstUser(textSearch);
         model.addAttribute("lstUser", lstUser);
         return "ListUser";
+    }
+    @RequestMapping("/changePassWord")
+    public String changePassWord(ModelMap model,HttpServletRequest request, Principal principal) {
+        org.springframework.security.core.userdetails.User userLogin = (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
+        String test = request.getRequestURI();
+        com.vn.entity.User userEntity = userDAO.findUserAccount(userLogin.getUsername());
+        int userId = (userDAO.findUserAccount(userLogin.getUsername()).getUserId());
+        User user = userDAO.findById(userId);
+        model.addAttribute("user", user);
+        return "changePassWord";
+    }
+    @RequestMapping(value = "/changePassWord", method = RequestMethod.POST)
+    public String changePassWordPost(@RequestParam("password1") String passWord , User user) {
+        EncrytedPasswordUtils encrytedPasswordUtils = new EncrytedPasswordUtils();
+        String pass = encrytedPasswordUtils.encrytePassword(passWord);
+        User userTemp = userDAO.findById(user.getUserId());
+        userTemp.setPassword(pass);
+        userDAO.update(userTemp);
+        return "redirect:/userInfo";
     }
 }
